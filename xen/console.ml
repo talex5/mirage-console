@@ -43,7 +43,8 @@ let connect id =
   let gnt = Gnt.console in
   let page = Start_info.console_start_page () in
   let ring = Io_page.to_cstruct page in
-  Console_ring.Ring.init ring; (* explicitly zero the ring *)
+  (* Note: we don't re-init the ring; it's already configured and we don't want
+   * to lose any output that's already been sent there by Mini-OS. *)
   let get_evtchn () = 
     let e = Eventchn.of_int Start_info.((get ()).console_evtchn) in
     Eventchn.unmask h e;
