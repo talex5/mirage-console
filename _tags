@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: ffc65d93c66517e098f40517585f8e46)
+# DO NOT EDIT (digest: 0c355b2af48ad7d288dd15ec56b99cad)
 # Ignore VCS directories, you can use the same kind of rule outside
 # OASIS_START/STOP if you want to exclude directories that contains
 # useless stuff for the build process
@@ -38,6 +38,7 @@
 "xen/mirage_console_xen.cmxs": use_mirage_console_xen
 <xen/*.ml{,i}>: pkg_io-page
 <xen/*.ml{,i}>: pkg_lwt
+<xen/*.ml{,i}>: pkg_mirage-profile
 <xen/*.ml{,i}>: pkg_mirage-types
 <xen/*.ml{,i}>: pkg_mirage-types.lwt
 <xen/*.ml{,i}>: pkg_mirage-xen
