@@ -51,7 +51,7 @@ Library mirage_console_xen
   Findlibparent:      mirage-console
   Findlibname:        xen
   Modules:            Console_xen
-  BuildDepends:       lwt, mirage-types, mirage-xen, io-page, xen-gnt, xen-evtchn, mirage-console.proto
+  BuildDepends:       lwt, mirage-types, mirage-xen, io-page, xen-gnt, xen-evtchn, mirage-console.proto, mirage-profile
 
 Library mirage_console_unix
   Build$:             flag(unix)
