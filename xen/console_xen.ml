@@ -99,7 +99,7 @@ let plug id =
 
 (** Return a list of available consoles *)
 let enumerate () =
-  Profile.label "console_xen.enumerate";
+  MProf.Trace.label "console_xen.enumerate";
   Xs.make () >>= fun xs ->
   try_lwt
     Xs.(immediate xs (fun h -> directory h "device/console"))
@@ -113,7 +113,7 @@ let enumerate () =
 (* Return the name -> id mapping, where a single id has a numerical name and
    may also have a human-readable name *)
 let names_to_ids ids =
-  Profile.label "console_xen.names_to_ids";
+  MProf.Trace.label "console_xen.names_to_ids";
   Xs.make () >>= fun xs ->
   Lwt_list.fold_left_s (fun list id ->
     try_lwt
@@ -127,7 +127,7 @@ let names_to_ids ids =
   ) [] ids
 
 let get_initial_console () =
-  Profile.label "console_xen.get_initial_console";
+  MProf.Trace.label "console_xen.get_initial_console";
   (* The domain is created with a reserved grant entry already set up.
      We don't need to know who the backend domain is. *)
   let backend_id = 0 in (* unused *)
@@ -193,7 +193,7 @@ let write_one t buf =
     else begin
       let seq, avail = Console_ring.Ring.Front.Writer.write t.ring in
       if Cstruct.len avail = 0 then begin
-        Profile.label "Console out full - waiting";
+        MProf.Trace.label "Console out full - waiting";
         Activations.after t.evtchn after >>= fun next ->
         loop next buffer
       end else begin
@@ -227,7 +227,7 @@ let read t =
   let rec wait_for_data after =
     let seq, avail = Console_ring.Ring.Front.Reader.read t.ring in
     if Cstruct.len avail = 0 && not t.closed then begin
-        Profile.label "Console input empty - waiting";
+        MProf.Trace.label "Console input empty - waiting";
       Activations.after t.evtchn after >>= fun after ->
       wait_for_data after
     end else begin
